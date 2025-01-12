@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import './Admin.css';
 
 export default function Admin() {
-  const [currentParticipantIndex, setCurrentParticipantIndex] = useState(0);
+  const [currentParticipantIndex, setCurrentParticipantIndex] = useState(1); // Start from 1
   const participants = ["Alice", "Bob", "Charlie", "Dave", "Eve", "Frank", "Grace", "Hannah", "Ivy", "Jack"];
 
   // Load currentParticipantIndex from localStorage
@@ -14,12 +15,12 @@ export default function Admin() {
 
   // Handle switching to the next participant
   const handleNextParticipant = () => {
-    const nextIndex = (currentParticipantIndex + 1) % participants.length;
+    const nextIndex = (currentParticipantIndex % participants.length) + 1;
     setCurrentParticipantIndex(nextIndex);
     localStorage.setItem('currentParticipantIndex', nextIndex);
   };
 
-  const currentParticipant = participants[currentParticipantIndex];
+  const currentParticipant = participants[currentParticipantIndex - 1];
 
   return (
     <div className="admin-container">
@@ -32,53 +33,6 @@ export default function Admin() {
           Next Participant
         </button>
       </main>
-      <style jsx>{`
-        .admin-container {
-          display: flex;
-          flex-direction: column;
-          min-height: 100vh;
-          background-image: url('/background.jpg');
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
-          color: white;
-          font-family: 'Poppins', sans-serif;
-        }
-        .header {
-          background: rgba(0, 0, 0, 0.7);
-          padding: 20px;
-          text-align: center;
-          font-size: 2.5rem;
-        }
-        .main-content {
-          display: flex;
-          flex: 1;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          padding: 20px;
-        }
-        .next-button {
-          padding: 10px 20px;
-          font-size: 1.2rem;
-          background-color: rgba(0, 0, 0, 0.7);
-          color: white;
-          border: none;
-          border-radius: 10px;
-          cursor: pointer;
-        }
-        .next-button:hover {
-          background-color: rgba(255, 255, 255, 0.2);
-        }
-        @media (max-width: 600px) {
-          .header {
-            font-size: 2rem;
-          }
-          .next-button {
-            font-size: 1rem;
-          }
-        }
-      `}</style>
     </div>
   );
 }
